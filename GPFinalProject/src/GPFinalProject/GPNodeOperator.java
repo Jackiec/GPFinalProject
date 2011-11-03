@@ -50,7 +50,7 @@ public class GPNodeOperator extends GPNode
     	int leftDepth = m_left.GetGPDepth();
     	int rightDepth = m_right.GetGPDepth();
     	
-    	if (leftDepth < rightDepth)
+    	if (leftDepth > rightDepth)
     	{
     		return leftDepth + 1;
     	}
