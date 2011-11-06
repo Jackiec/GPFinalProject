@@ -40,6 +40,10 @@ public class GPNodeOperator extends GPNode
         	{
         		output = leftValue / rightValue;
         	}
+        	else
+        	{
+        		output = Double.MAX_VALUE;
+        	}
         }
         
         return output;
@@ -67,6 +71,51 @@ public class GPNodeOperator extends GPNode
     
     public String GetGPString()
     {
-        return m_left.GetGPString() + " " + m_operator + " " + m_right.GetGPString();
+        return "( " +  m_left.GetGPString() + " " + m_operator + " " + m_right.GetGPString() + " )";
     }	
+    
+    public GPNode GetLeftNode()
+    {
+    	return m_left;
+    }
+    
+    public GPNode GetRightNode()
+    {
+    	return m_right;
+    }
+    
+    public void SetLeftNode(GPNode input)
+    {
+    	m_left = input;
+    }
+    
+    public void SetRightNode(GPNode input)
+    {
+    	m_right = input;
+    }
+    
+    public GPNode FindNodeReferenceById(int searchID, int currentCount)
+    {
+    	if (searchID == currentCount)
+    	{
+    		return m_left;
+    	}    	
+    	
+    	int tmp = searchID + m_left.GetGPNodeCount();
+    	
+    	if (tmp >= searchID)
+    	{
+    		return m_left.FindNodeReferenceById(searchID, currentCount + 1);
+    	}
+    	
+    	tmp = searchID + m_left.GetGPDepth() + m_right.GetGPNodeCount();
+    	
+    	if (tmp >= searchID)
+    	{
+    		return m_right.FindNodeReferenceById(searchID, currentCount + m_left.GetGPNodeCount() + 1);
+    	}
+    	
+    	return null;
+    	
+    }
 }
